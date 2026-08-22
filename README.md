@@ -2,7 +2,7 @@
 
 # OpenDealflow: The Open-Source Affinity Alternative for VCs
 
-[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/open-dealflow)
+[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/OpenDealflow)
 
 A dealflow CRM for investors — startups, people, a VC pipeline, and a warm-intro relationship graph. Self-hosted, agent-ready, and free. Built for funds that are priced out of Affinity's ~$2,000/seat and don't want to bend HubSpot into something it isn't.
 
@@ -36,12 +36,12 @@ Unlike the incumbents, this runs on your own infrastructure with no per-seat pri
 
 The fastest way to use OpenDealflow is with an AI employee doing the data entry. Deploy it on [Clawnify](https://clawnify.com) and your agent becomes the relationship-intelligence layer: forward it a deck and the deal appears in the pipeline; tell it "we're passing" and the reason is logged; ask it "who can intro me to Voltway?" and it answers from the graph.
 
-[**Deploy with Clawnify →**](https://app.clawnify.com/deploy?repo=clawnify/open-dealflow)
+[**Deploy with Clawnify →**](https://app.clawnify.com/deploy?repo=clawnify/OpenDealflow)
 
 ## Quickstart (self-hosted)
 
 ```bash
-git clone https://github.com/clawnify/open-dealflow.git
+git clone https://github.com/clawnify/OpenDealflow.git
 cd open-dealflow
 pnpm install
 pnpm run dev
