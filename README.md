@@ -1,6 +1,6 @@
-<img src="readme-banner.png" alt="Dealflow preview" />
+<img src="readme-banner.png" alt="OpenDealflow preview" />
 
-# Dealflow: The Open-Source Affinity Alternative for VCs
+# OpenDealflow: The Open-Source Affinity Alternative for VCs
 
 [![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/open-dealflow)
 
@@ -10,7 +10,7 @@ Built with **React + Tailwind + shadcn/ui** on **Hono + SQLite**. Path-based rou
 
 ## What Is It?
 
-Dealflow is a purpose-built venture CRM you can self-host, customize, and own. Think of it as an open-source Affinity alternative — the entities are the ones a fund actually works with:
+OpenDealflow is a purpose-built venture CRM you can self-host, customize, and own. Think of it as an open-source Affinity alternative — the entities are the ones a fund actually works with:
 
 - **Companies** — the startups in your universe (sector, location, one-liner)
 - **People** — founders, co-investors, LPs, operators, typed as such
@@ -34,7 +34,7 @@ Unlike the incumbents, this runs on your own infrastructure with no per-seat pri
 
 ## Run It With an AI Agent
 
-The fastest way to use Dealflow is with an AI employee doing the data entry. Deploy it on [Clawnify](https://clawnify.com) and your agent becomes the relationship-intelligence layer: forward it a deck and the deal appears in the pipeline; tell it "we're passing" and the reason is logged; ask it "who can intro me to Voltway?" and it answers from the graph.
+The fastest way to use OpenDealflow is with an AI employee doing the data entry. Deploy it on [Clawnify](https://clawnify.com) and your agent becomes the relationship-intelligence layer: forward it a deck and the deal appears in the pipeline; tell it "we're passing" and the reason is logged; ask it "who can intro me to Voltway?" and it answers from the graph.
 
 [**Deploy with Clawnify →**](https://app.clawnify.com/deploy?repo=clawnify/open-dealflow)
 

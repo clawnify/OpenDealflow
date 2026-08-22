@@ -24,7 +24,7 @@ export function Sidebar({ route, navigate }: { route: Route; navigate: (to: stri
         <div className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Users className="size-4" />
         </div>
-        <span className="text-base font-bold tracking-tight text-sidebar-foreground">Dealflow</span>
+        <span className="text-base font-bold tracking-tight text-sidebar-foreground">OpenDealflow</span>
       </div>
 
       <nav className="flex flex-1 flex-col gap-0.5 p-3">

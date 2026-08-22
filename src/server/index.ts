@@ -163,7 +163,7 @@ async function resolveImportCustomColumns(
 // /api/openapi.json + GET /llms.txt from the live routes). App code below is
 // just routes + business logic.
 const app = createApp<Env>({
-  title: "Dealflow",
+  title: "OpenDealflow",
   version: "1.0.0",
   description: "A dealflow CRM for investors: startups, people, a VC pipeline, and a warm-intro relationship graph.",
 });

@@ -1,4 +1,4 @@
-# Dealflow — agent guide
+# OpenDealflow — agent guide
 
 A dealflow CRM for investors: **companies** (startups), **people** (founders,
 investors, LPs, operators), a **deals** pipeline with VC stages, and a
