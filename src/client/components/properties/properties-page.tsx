@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   WIDGETS,
@@ -145,13 +145,20 @@ function EntityAttributes({
   const [localOrder, setLocalOrder] = useState<string[] | null>(null);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
 
-  const remove = async (def: CustomFieldDef) => {
-    if (!confirm(`Delete "${def.label}"? This removes the column and its values for every ${entity}.`)) return;
+  // Confirmed in a dialog: native confirm() is blocked when the app is embedded.
+  const [removeTarget, setRemoveTarget] = useState<CustomFieldDef | null>(null);
+  const [removing, setRemoving] = useState(false);
+  const confirmRemove = async () => {
+    if (!removeTarget) return;
+    setRemoving(true);
     try {
-      await deleteCustomField(def.id);
+      await deleteCustomField(removeTarget.id);
+      setRemoveTarget(null);
       await onChanged();
     } catch (err) {
       onError(err instanceof Error ? err.message : "Failed to delete attribute");
+    } finally {
+      setRemoving(false);
     }
   };
 
@@ -227,7 +234,7 @@ function EntityAttributes({
               <SortableContext items={customs.map((d) => d.id)} strategy={verticalListSortingStrategy}>
                 {customs.map((def) => (
                   <SortableAttrRow key={def.id} def={def} canDrag={canDrag}
-                    onEdit={() => setEditing(def)} onRemove={() => remove(def)} />
+                    onEdit={() => setEditing(def)} onRemove={() => setRemoveTarget(def)} />
                 ))}
               </SortableContext>
               {builtins.length === 0 && customs.length === 0 && (
@@ -245,6 +252,27 @@ function EntityAttributes({
       <AddAttribute entity={entity} existingKeys={defs.map((d) => d.key)} onChanged={onChanged} onError={onError} />
 
       <EditAttribute def={editing} onClose={() => setEditing(null)} onChanged={onChanged} onError={onError} />
+
+      <Dialog open={!!removeTarget} onOpenChange={(o) => !o && setRemoveTarget(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Delete attribute?</DialogTitle>
+            <DialogDescription>
+              {removeTarget
+                ? `"${removeTarget.label}" and its values will be removed from every ${entity}. This can't be undone.`
+                : ""}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button size="sm" variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button size="sm" variant="destructive" onClick={confirmRemove} disabled={removing}>
+              {removing ? "Deleting…" : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

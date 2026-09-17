@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { reportLocation } from "@clawnify/app/client";
 
 export type Route =
   | { name: "contacts" }
@@ -33,5 +34,28 @@ export function useRouter() {
     return () => window.removeEventListener("popstate", handler);
   }, []);
 
+  // Tell the Clawnify dashboard where we are, so a reload reopens this screen.
+  useEffect(() => {
+    reportLocation(window.location.pathname + window.location.search);
+  }, [path]);
+
   return { path, route: parse(path), navigate };
+}
+
+/**
+ * The record open in a page's preview panel, kept in the query string so a
+ * reload (and the dashboard's restored URL) reopens it. Returns the id from the
+ * URL and a setter that rewrites it in place.
+ */
+export function useSelectedParam(name: string): [string | null, (id: string | null) => void] {
+  const [value, setValue] = useState<string | null>(() => new URLSearchParams(window.location.search).get(name));
+  const update = useCallback((id: string | null) => {
+    const url = new URL(window.location.href);
+    if (id) url.searchParams.set(name, id);
+    else url.searchParams.delete(name);
+    window.history.replaceState(null, "", url);
+    setValue(id);
+    reportLocation(url.pathname + url.search);
+  }, [name]);
+  return [value, update];
 }
