@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search, Plus, Upload, Pencil, Trash2, ChevronUp, ChevronDown, ExternalLink } from "lucide-react";
 import { useCrm } from "@/context";
+import { useSelectedParam } from "@/hooks/use-router";
 import { PageHeader, EntityIcon, CategoryBadge, EmptyState } from "@/components/shared";
 import { CompanyDialog } from "@/components/companies/company-dialog";
 import { CompanyPreview } from "@/components/companies/company-preview";
@@ -33,7 +34,18 @@ export function CompaniesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [editing, setEditing] = useState<Company | undefined>(undefined);
-  const [preview, setPreview] = useState<Company | null>(null);
+  const [previewId, setPreviewId] = useSelectedParam("company");
+  const [preview, setPreviewRecord] = useState<Company | null>(null);
+  const setPreview = (record: Company | null) => {
+    setPreviewRecord(record);
+    setPreviewId(record?.id ?? null);
+  };
+  // Reopen the panel named in the URL after a reload, once the list has it.
+  useEffect(() => {
+    if (!previewId || preview) return;
+    const match = companies.find((c) => c.id === previewId);
+    if (match) setPreviewRecord(match);
+  }, [previewId, companies]); // eslint-disable-line react-hooks/exhaustive-deps
   const [deleteTarget, setDeleteTarget] = useState<Company | null>(null);
   const [deleting, setDeleting] = useState(false);
 

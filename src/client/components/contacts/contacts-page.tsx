@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Search, Upload, Plus, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { useCrm } from "@/context";
+import { api } from "@/api";
+import { useSelectedParam } from "@/hooks/use-router";
 import { PageHeader, Avatar, EntityIcon, CategoryBadge, EmptyState } from "@/components/shared";
 import { ConnectionsIndicator } from "@/components/connections-indicator";
 import { ContactDialog } from "@/components/contacts/contact-dialog";
@@ -35,7 +37,19 @@ export function ContactsPage({ navigate }: { navigate: (to: string) => void }) {
   const [importOpen, setImportOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Contact | undefined>(undefined);
-  const [preview, setPreview] = useState<Contact | null>(null);
+  const [previewId, setPreviewId] = useSelectedParam("contact");
+  const [preview, setPreviewRecord] = useState<Contact | null>(null);
+  const setPreview = (record: Contact | null) => {
+    setPreviewRecord(record);
+    setPreviewId(record?.id ?? null);
+  };
+  // Reopen the panel named in the URL after a reload.
+  useEffect(() => {
+    if (!previewId || preview) return;
+    api<{ contact: Contact }>("GET", `/api/contacts/${encodeURIComponent(previewId)}`)
+      .then((r) => setPreviewRecord(r.contact))
+      .catch(() => setPreviewId(null));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const [deleteTarget, setDeleteTarget] = useState<Contact | null>(null);
   const [deleting, setDeleting] = useState(false);
 
