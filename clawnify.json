@@ -1,7 +1,7 @@
 {
   "$schema": "https://app.clawnify.com/schema/v1/clawnify.json",
   "version": 1,
-  "name": "OpenDealflow",
+  "name": "Dealflow",
   "description": "OpenDealflow CRM for investors: startups, people, a VC pipeline, and a warm-intro relationship graph. Like Affinity. Best for venture capital, angel investing, deal tracking, or investor relationship management.",
   "icon": "icon.svg",
   "tags": ["vc", "dealflow", "crm", "investing", "pipeline", "network"],
