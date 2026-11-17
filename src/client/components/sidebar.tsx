@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Users, Building2, CircleDollarSign, SlidersHorizontal } from "lucide-react";
 import { useCrm } from "../context";
 import { cn } from "../lib/utils";
@@ -13,7 +14,7 @@ const SETTINGS_NAV = [
   { key: "properties", path: "/settings/properties", label: "Attributes", icon: SlidersHorizontal },
 ] as const;
 
-export function Sidebar({ route, navigate }: { route: Route; navigate: (to: string) => void }) {
+export function Sidebar({ route, navigate, card }: { route: Route; navigate: (to: string) => void; card?: ReactNode }) {
   const { stats } = useCrm();
   const counts: Record<string, number> = { contacts: stats.contacts, companies: stats.companies, deals: stats.deals };
   const activeKey = route.name === "contact" ? "contacts" : route.name;
@@ -75,6 +76,7 @@ export function Sidebar({ route, navigate }: { route: Route; navigate: (to: stri
           );
         })}
       </nav>
+      {card && <div className="px-3 pb-3">{card}</div>}
     </aside>
   );
 }

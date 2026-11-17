@@ -1,4 +1,4 @@
-import { AppNav, embedded } from "@clawnify/app/client";
+import { AppNav } from "@clawnify/app/client";
 import { useCrmState } from "./hooks/use-crm";
 import { CrmContext } from "./context";
 import { useRouter } from "./hooks/use-router";
@@ -21,27 +21,25 @@ export function App() {
     <CrmContext.Provider value={state}>
     <TooltipProvider delayDuration={200}>
       <div className="flex h-screen min-h-0 flex-col overflow-hidden bg-background text-foreground md:flex-row">
-        {embedded ? (
-          // Inside the Clawnify dashboard the sections live in its sidebar.
-          <AppNav
-            title="OpenDealflow"
-            icon="users"
-            active={activeKey}
-            groups={[
-              { items: [
-                { id: "contacts", label: "People", icon: "users", href: "/contacts", home: true },
-                { id: "companies", label: "Companies", icon: "building-2", href: "/companies", count: state.stats.companies },
-                { id: "deals", label: "Deals", icon: "dollar-sign", href: "/deals", count: state.stats.deals },
-              ] },
-              { label: "Settings", items: [
-                { id: "properties", label: "Attributes", icon: "settings", href: "/settings/properties" },
-              ] },
-            ]}
-            onNavigate={(item) => navigate(item.href!)}
-          />
-        ) : (
-          <Sidebar route={route} navigate={navigate} />
-        )}
+        {/* One <AppNav>: inside Clawnify the dashboard draws these sections in
+            its sidebar, and anywhere else the app's own sidebar is drawn from it. */}
+        <AppNav
+          title="OpenDealflow"
+          icon="users"
+          active={activeKey}
+          groups={[
+            { items: [
+              { id: "contacts", label: "People", icon: "users", href: "/contacts", home: true },
+              { id: "companies", label: "Companies", icon: "building-2", href: "/companies", count: state.stats.companies },
+              { id: "deals", label: "Deals", icon: "dollar-sign", href: "/deals", count: state.stats.deals },
+            ] },
+            { label: "Settings", items: [
+              { id: "properties", label: "Attributes", icon: "settings", href: "/settings/properties" },
+            ] },
+          ]}
+          onNavigate={(item) => navigate(item.href!)}
+          standalone={(nav) => <Sidebar route={route} navigate={navigate} card={nav.card} />}
+        />
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
           {state.loading ? (
             <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">Loading…</div>
