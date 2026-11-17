@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@clawnify/app": "^0.4.8",
+    "@clawnify/app": "^0.4.9",
     "@clawnify/connections": "^0.2.2",
     "@clawnify/db": "^0.4.3",
     "@dnd-kit/core": "^6.3.1",
